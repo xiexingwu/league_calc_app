@@ -38,6 +38,17 @@ const inventory = new Inventory({});
 const runes = new Runes('#rune-cart-1');
 const champs = new Champs(inventory, runes);
 
+/**
+ * Table and Plots
+ */
+const table = new Table({
+    table_div, 
+    champs, 
+    champ_selector, 
+    stats_selector
+})
+const plot_data = new PlotData({plot_div});
+
 $.getJSON( "/data/champ_data.json", loadChampData);
 
 function loadChampData(data){
@@ -48,16 +59,7 @@ function loadChampData(data){
     setupTablePlot();
 }
 function setupTablePlot(){
-    /**
-     * Table and Plots
-     */
-    const table = new Table({
-        table_div, 
-        champs, 
-        champ_selector, 
-        stats_selector
-    })
-    const plot_data = new PlotData({plot_div});
+
 
     filter.linkShop(shop);
 
