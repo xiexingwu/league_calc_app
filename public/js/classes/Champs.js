@@ -1,7 +1,4 @@
 const champ_data = {}
-$.getJSON( "/data/champ_data.json", function( data ) {
-    Object.assign(champ_data, data.champ_data);
-});
 
 class Champs{
     growable_stats = [

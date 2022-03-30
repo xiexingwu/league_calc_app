@@ -1,5 +1,3 @@
-// import {PlotData} from './PlotData.js'
-
 
 /* Setup specific to stats_calc page */
 const table_div = document.getElementById('table');
@@ -39,50 +37,60 @@ const shop = new Shop({});
 const inventory = new Inventory({});
 const runes = new Runes('#rune-cart-1');
 const champs = new Champs(inventory, runes);
-for (const id in champ_data){
-    champs.newChamp(champ_data[id]);
+
+$.getJSON( "/data/champ_data.json", loadChampData);
+
+function loadChampData(data){
+    Object.assign(champ_data, data.champ_data);
+    for (const id in champ_data){
+        champs.newChamp(champ_data[id]);
+    }
+    setupTablePlot();
+}
+function setupTablePlot(){
+    /**
+     * Table and Plots
+     */
+    const table = new Table({
+        table_div, 
+        champs, 
+        champ_selector, 
+        stats_selector
+    })
+    const plot_data = new PlotData({plot_div});
+
+    filter.linkShop(shop);
+
+    shop.linkInventory(inventory);
+    inventory.linkShop(shop);
+
+    table.linkPlotData(plot_data);
+    plot_data.linkTable(table);
+
+    plot_data.sortByY();
+
+    // Datatables
+    $(document).ready( function () {
+        $(table.table_div).DataTable({
+            scrollX: true,
+            scrollCollapse: false,
+
+            info: false,
+            paging: false,
+            searching:false,
+            orderFixed: {post: [[0, 'asc']]}, // always sort by Col 0 (name) last
+        });
+    });
+
+    /**
+     * Feature demo
+     */
+    table.table_div.querySelector('#tab-Aatrox').click() // initial demo: Click Aatrox row 
+
+    runes.primary.findOptionByRune('Precision').click();
+    runes.secondary.findOptionByRune('Domination').click();
+
 }
 
-filter.linkShop(shop);
-
-shop.linkInventory(inventory);
-inventory.linkShop(shop);
-
-/**
- * Table and Plots
- */
-const table = new Table({
-    table_div, 
-    champs, 
-    champ_selector, 
-    stats_selector
-})
-const plot_data = new PlotData({plot_div});
-
-table.linkPlotData(plot_data);
-plot_data.linkTable(table);
-
-plot_data.sortByY();
 
 
-// Datatables
-$(document).ready( function () {
-    $(table.table_div).DataTable({
-        scrollX: true,
-        scrollCollapse: false,
-
-        info: false,
-        paging: false,
-        searching:false,
-        orderFixed: {post: [[0, 'asc']]}, // always sort by Col 0 (name) last
-    });
-});
-
-
-/**
- * Feature demo
- */
-table.table_div.querySelector('#tab-Aatrox').click() // initial demo: Click Aatrox row 
-
-runes.primary.findOptionByRune('Precision').click();
-runes.secondary.findOptionByRune('Domination').click();
