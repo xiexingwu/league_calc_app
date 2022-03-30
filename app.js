@@ -2,6 +2,8 @@ const path = require('path');
 const express = require('express');
 const ejs = require('ejs');
 
+PORT = process.env.PORT || 3000
+
 /* Loading data */
 const {champ_data} = require('./data/champ_data.json');
 const {item_data, tierlist} = require('./data/item_data.json');
@@ -34,6 +36,8 @@ app.use('/data/:data_type(champ|item)_data.json', function(req, res){
 
 
 /* routing */
+// stats_calc
+// damage_calc
 app.get("/:calc_type(stats|damage)_calc", function (req, res) {
   const page = req.params.calc_type + "_calc"
   res.render(page, {
@@ -52,7 +56,12 @@ app.get("/:help(help)", function (req, res) {
   res.render("help", {req});
 });
 
+app.get("/", function (req, res) {
+  res.redirect('/stats_calc');
+});
+
+
 app.use((req, res) => {res.sendStatus(404)})
 
-app.listen(3000);
+app.listen(PORT, () => console.log(`Server is listening on port ${PORT}...`));
 

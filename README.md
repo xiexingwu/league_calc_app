@@ -10,3 +10,4 @@ Plots and tabulates the stats of all champions at a user-specified level.
 * Calculation of stats after items.
 * Calculation of skill damage against other champions.
 * Increase automation of scraping raw data (currently semi-manual from leagueoflegends.fandom.com)
+* Limit buying mythic components in Shop (starting from this.mythiccomp)

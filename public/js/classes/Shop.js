@@ -197,8 +197,8 @@ class Shop{
         this.boots = this.shop_div.querySelectorAll('#collapse-boots input');
         this.mythic = this.shop_div.querySelectorAll('#collapse-mythic input');
         this.ornn = this.shop_div.querySelectorAll('#collapse-ornn input');
-        this.mythiccomp = Array.from(this.shop_div.querySelectorAll('#collapse-epic input'))
-            .filter(i=>tierlist_id.mythiccomp.includes(parseInt(i.id.replace('select-',''))))
+        // this.mythiccomp = Array.from(this.shop_div.querySelectorAll('#collapse-epic input'))
+        //     .filter(i=>tierlist_id.mythiccomp.includes(parseInt(i.id.replace('select-',''))))
     }
     initMutationObservers(){
         const config = {
