@@ -28,6 +28,14 @@ app.use('/images',express.static(path.join(__dirname,"node_modules/datatables.ne
 app.use('/dt',express.static(path.join(__dirname,"node_modules/datatables.net/js")))
 app.use('/mathjs',express.static(path.join(__dirname,"node_modules/mathjs/lib/browser")))
 
+/* Handle favicon.ico */
+app.use( function(req, res, next) {
+  if (req.originalUrl && req.originalUrl.split("/").pop() === 'favicon.ico') {
+    return res.sendStatus(204);
+  }
+  return next();
+});
+
 /* Serve champ/item data */
 app.use('/data/:data_type(champ|item)_data.json', function(req, res){
   const filename = req.params.data_type + "_data.json";
