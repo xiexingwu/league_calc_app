@@ -1,0 +1,122 @@
+<%- include('header.ejs') %>
+
+<div class="container-fluid" id="selection-container">
+    <%- include('champ_item_selection.ejs') %>
+</div>
+<div class="container-fluid" id="plot-container">
+    <!-- Figure -->
+    <div class="row mt-3">
+        <div class="col position-relative">
+
+            <!-- Stat & Level input -->
+            <div class="formgroup position-absolute top-0 start-0 ps-5" style="z-index:1000">
+                <select class="form-select" onchange="return table.setPlotStat(event.target.value)">
+                    <% for (stat in utils.champ_stats_name) { if (utils.no_plot_stats.includes(stat)) continue; %>
+                    <option value="<%= stat %>"><%= utils.champ_stats_name[stat] %></option>
+                    <% } %>
+                </select>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Level</span>
+                    <input type="text" class="form-control" placeholder="1"
+                        onkeypress="return table.isChampLevel(event)"
+                        onchange="return table.setChampLevel(event.target.value)">
+                </div>
+            </div>
+
+            <!-- Plotly div -->
+            <div id="plot-div">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid" id="table-container">
+
+    <!-- Stat Selector -->
+    <div class="row mt-3">
+        <div class="col">
+            <!-- Stat selector -->
+            <div class="card-group" id="stats-selector">
+                <!-- Offensive stats -->
+                <% for (const group_name in utils.champ_stats_groups) { %>
+                <% const stats_group = utils[group_name]; %>
+                <div class="card">
+                    <div class="card-header">
+                        <button type="button" class="btn btn-link" id="collapse-<%= group_name %>-btn"
+                            data-bs-toggle="collapse" data-bs-target=".collapse-stats-selector">
+                            <%= utils.champ_stats_groups[group_name] %>
+                        </button>
+                    </div>
+                    <div class="collapse collapse-stats-selector show" style="flex:1 0 auto">
+                        <div class="card-body h-100 d-flex flex-column">
+                            <% for (const stat of stats_group) { %>
+                            <div class="form-check">
+                                <input class="form-check-input" name="select-<%= group_name %>" type="checkbox"
+                                    id="select-stats-<%= stat %>"
+                                    <%= utils.default_stats_to_show.includes(stat) ? "checked" : '' %>>
+                                <label class="form-check-label" for="select-stats-<%= stat %>">
+                                    <%= utils.champ_stats_name[stat] %>
+                                </label>
+                            </div>
+                            <% } %>
+                            <button type="button" class="btn btn-secondary mt-auto" id="select-<%= group_name %>-btn"
+                                nclicks="0">
+                                Unselect all
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="row mt-3">
+        <div class="col">
+            <table class="table ms-0" id="table" style="width:100%" level="1">
+                <thead>
+                    <tr>
+                        <% for (const stat in utils.champ_stats_name) { if (!utils.hidden_champ_stats.includes(stat)) { %>
+                        <th scope=" col" col="<%= stat %>" class="text-nowrap">
+                            <%= utils.champ_stats_name[stat] %>
+                        </th>
+                        <% }} %>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for (const id in champ_data){ const champ = champ_data[id]; %>
+                    <tr id='tab-<%= id %>'>
+                        <th scope="row">
+                            <%= champ.name %>
+                        </th>
+                        <% for (const stat in utils.champ_stats_name) { if (!utils.hidden_champ_stats.concat('name').includes(stat)) { %>
+                        <td col='<%= stat %>'>
+                            <%= (champ[stat]===undefined) ? 0 : champ[stat]; %>
+                        </td>
+                        <% }} %>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+
+
+</div>
+
+<!-- My scripts -->
+<script src="/js/common/common.js"></script>
+<script src="/js/common/champ_item_collapse.js"></script>
+<script src="/js/common/filter.js"></script>
+
+<script src="/js/stats_calc/PlotData.js"></script>
+<script src="/js/stats_calc/Table.js"></script>
+<script src="/js/stats_calc/setup.js"></script>
+
+
+<script src="/js/common/calcs.js"></script>
+
+
+<%- include('footer.ejs') %>

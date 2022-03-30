@@ -1,0 +1,47 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "Launch Program",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/app.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Prep champ data",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "cwd": "${workspaceFolder}/data",
+            "program": "${workspaceFolder}/data/prep_champ.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Prep champ wiki data",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "cwd": "${workspaceFolder}/data",
+            "program": "${workspaceFolder}/data/prep_champ_wiki.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Prep item data",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "cwd": "${workspaceFolder}/data",
+            "program": "${workspaceFolder}/data/prep_item.js"
+        }
+    ]
+}

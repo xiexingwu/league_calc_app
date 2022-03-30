@@ -1,0 +1,147 @@
+<div class="row mt-3">
+    <!-- Collapse champ buttons -->
+    <div class="col-lg-6 mb-1">
+        <div class="d-flex justify-content-start">
+            <button type="button" class="btn btn-secondary" id="collapse-champ-btn" data-bs-toggle="collapse"
+                data-bs-target="#collapse-champ">
+                Show/Hide Champions
+            </button>
+        </div>
+    </div>
+
+    <!-- Collapse item buttons -->
+    <div class="col-lg-6 mb-1">
+        <div class="d-flex justify-content-lg-end">
+
+            <!-- collapse item button -->
+            <button type="button" class="btn btn-secondary" id="collapse-item-btn" data-bs-toggle="collapse"
+                data-bs-target="#collapse-item">
+                Show/Hide Items
+            </button>
+        </div>
+    </div>
+
+
+    <!-- Champion collapse -->
+    <div class="collapse" id="collapse-champ">
+        <div class="row row-cols-sm-auto align-items-center mb-1">
+            <div class="col-6">
+                <button type="button" class="btn btn-secondary" id="select-champ-btn" nclicks="0">
+                    Unselect All
+                </button>
+            </div>
+            <div class="col-6">
+                <input class="form-control" type="search" placeholder="Search..." id="champ-search">
+            </div>
+        </div>
+        <div class="card" id="champ-selector">
+            <div class="card-body">
+                <!-- Champion selector -->
+                <% for (id in champ_data){ %>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="select-<%= id %>" checked>
+                    <label class=" form-check-label" for="select-<%= id %>">
+                        <img src="/icons/champion/<%= id %>.png" alt="<%= champ_data[id].name %>">
+                    </label>
+                </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <!-- Item collapse -->
+    <div class="collapse" id="collapse-item">
+        <div class="d-flex justify-content-lg-end">
+            <!-- Item filters -->
+            <div class="dropdown d-inline-block" id="item-filter-dropdown">
+
+                <!-- Filter 1: stat -->
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="filter-stat-btn"
+                    data-bs-toggle="dropdown" data-bs-auto-close="outside">
+                    Filter by Stat
+                </button>
+                <div class="dropdown-menu dropdown-menu-end">
+                    <div class="card-body py-0">
+                        <% for (const stat in utils.item_stats_name) { if (!utils.hidden_item_stats.includes(stat)) { %>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="filter-stat" value="<%= stat %>"
+                                id="filter-<%= stat %>">
+                            <label class="form-check-label text-nowrap" for="filter-<%= stat %>">
+                                <span class="d-none d-lg-inline">
+                                    <%= utils.item_stats_name[stat] %>
+                                </span>
+                                <span class="d-inline d-lg-none">
+                                    <%= utils.item_stats_abbr[stat] %>
+                                </span>
+                            </label>
+                        </div>
+                        <% }} %>
+                    </div>
+                    <hr class="dropdown-divider">
+
+                    <button type="button" class="dropdown-item text-center" id="clear-stat-btn">
+                        Clear Filter
+                    </button>
+                </div>
+
+                <!-- Filter 2: tag -->
+                <div class="dropdown d-inline-block">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="filter-role-btn"
+                        data-bs-toggle="dropdown" data-bs-auto-close="outside">
+                        Filter by Role
+                    </button>
+                    <div class="dropdown-menu">
+                        <div class="card-body py-0">
+                            <% for (const tag in utils.item_menu_tags_name) { %>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="radio" name="filter-role" value="<%= tag %>"
+                                    id="filter-<%= tag %>">
+                                <label class="form-check-label text-nowrap" for="filter-<%= tag %>">
+                                    <span class="d-none d-lg-inline">
+                                        <%= utils.item_menu_tags_name[tag] %>
+                                    </span>
+                                </label>
+                            </div>
+                            <% } %>
+                        </div>
+                        <hr class="dropdown-divier">
+                        <button type="button" class="dropdown-item text-center" id="clear-role-btn">
+                            Clear Filter
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div id="item-selector">
+
+            <% for (const tier in tierlist) { %>
+            <div class="card">
+                <!-- Tier collapse button -->
+                <div class="card-header py-1">
+                    <button type="button" class="btn btn-link text-dark" data-bs-toggle="collapse"
+                        data-bs-target="#collapse-<%= tier %>">
+                        <%= tier[0].toUpperCase() + tier.slice(1) // Capitalise tier text %>
+                    </button>
+                </div>
+                <!-- Tier collapse -->
+                <div class="collapse <%= ['mythic','legendary','boots'].includes(tier) ? 'show' : ''%>"
+                    id="collapse-<%= tier %>">
+                    <!-- Item selector -->
+                    <div class="card-body">
+                        <% tierlist[tier].forEach(name => { const item = item_data[name];%>
+                        <div class="form-check form-check-inline" tier="<%= tier %>">
+                            <input class="form-check-input" type="checkbox" id="select-<%= item.id %>">
+                            <label class=" form-check-label" for="select-<%= item.id %>">
+                                <img src="/icons/item/<%= item.id %>.png" alt="<%= name %>">
+                            </label>
+                        </div>
+                        <% }) %>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+        </div>
+    </div>
+</div>

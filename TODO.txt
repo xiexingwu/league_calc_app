@@ -1,0 +1,26 @@
+* migrate filter.js to Shop.js
+* items: 
+    . methods to accumulate explicit item stats (including mythic stats?)
+    . titanic AD
+        
+* GAME PATCH VERSION
+
+/**
+* Champ.processItems() is poorly thought out
+*/
+Maybe change data structure for champ_data, i.e. instead of [champ1, champ2, ...]
+    use {id1:{champ1}, id2:{champ2}, ...}
+To not interfere with EJS, will probably need to make a new JSON
+
+
+* cass can't buy boots
+* parse item description for tags (i.e. lethality)
+* mega gnar, dismounted/mounted kled
+
+* Attack speed: 
+    . Base = ratio * (1 + Bonus AS at level 1);
+    . Final = (base + (ratio * total bonus)) * multipliers
+
+
+---- Damage calc
+* Toggle to switch between players/champions.

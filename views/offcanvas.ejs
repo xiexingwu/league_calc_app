@@ -1,0 +1,82 @@
+<button class="btn btn-primary position-fixed bottom-0 end-50 p-1" type="button" data-bs-toggle="offcanvas"
+    data-bs-target="#offcanvas" style="z-index:1000">
+    Items & Runes
+</button>
+
+<div class="offcanvas offcanvas-bottom" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvas">
+    <button type="button" class="btn-close text-reset position-absolute t-0 end-0 p-3"
+        data-bs-dismiss="offcanvas"></button>
+    <div class="row row-cols-auto h-100">
+        <!-- Left buttons -->
+        <div class="offcanvas-header col-sm-2">
+            <!-- h-100 d-flex flex-sm-column justify-content-between"> -->
+            <h5 class="offcanvas-title">Config</h5>
+            <div placeholder-for-player-select></div>
+            <% if (req.params.calc_type == 'stats') { %>
+            <button type="button" class="btn btn-secondary w-100" id="showhide-plot-btn">
+                Show/Hide Graph
+            </button>
+            <button type="button" class="btn btn-secondary w-100" id="showhide-table-btn">
+                Show/Hide
+                Table
+            </button>
+            <% } %>
+            <div dummy-for-justify-flex></div>
+        </div>
+
+        <!-- P1 Inventory -->
+        <div class="offcanvas-header col">
+            <h5 class="offcanvas-title">Items</h5>
+            <div class="inventory" id="inventory-1" config-id="#inventory-1-config">
+            </div>
+            <div dummy-for-justify-flex></div>
+        </div>
+
+        <!-- P1 Item Config -->
+        <div class="offcanvas-body col inventory-config" id="inventory-1-config">
+        </div>
+
+        <!-- P1 Runes -->
+        <div class="offcanvas-header col">
+            <h5 class="offcanvas-title">Runes</h5>
+            <div class="rune-cart" id="rune-cart-1" config-id="#rune-1-config">
+                <div class="row row-cols">
+                    <div class="col">
+                        <h6>Primary</h6>
+                        <div class="dropdown" id="dropdown-primary">
+                            <button class="btn btn-none dropdown-toggle" type="button" id="dropdown-primary-btn"
+                                data-bs-toggle="dropdown">
+                            </button>
+                            <ul class="dropdown-menu" id="dropdown-primary-menu">
+                                <% for (page in utils.rune_pages) { %>
+                                <span class="dropdown-item" id="dropdown-primary-<%= page %>"><img
+                                        src="/icons/rune/<%= page %>.png" class="me-1"><%= page %></span>
+                                <% } %>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h6>Secondary</h6>
+                        <div class="dropdown" id="dropdown-secondary">
+                            <button class="btn btn-none dropdown-toggle" type="button" id="dropdown-secondary-btn"
+                                data-bs-toggle="dropdown">
+                            </button>
+                            <ul class="dropdown-menu" id="dropdown-secondary-menu">
+                                <% for (page in utils.rune_pages) { %>
+                                <span class="dropdown-item" id="dropdown-secondary-<%= page %>"><img
+                                        src="/icons/rune/<%= page %>.png" class="me-1"><%= page %></span>
+                                <% } %>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div dummy-for-justify-flex></div>
+        </div>
+
+        <!-- P1 Runes Config -->
+        <div class="offcanvas-body col rune-config" id="rune-1-config">
+        </div>
+    </div>
+
+</div>

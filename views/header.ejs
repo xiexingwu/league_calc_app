@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>League Calculator</title>
+
+    <link rel="stylesheet" href="/css/app.css">
+
+    <link rel="stylesheet" href="/bs/bootstrap.min.css">
+
+    <script src="/jquery/jquery.min.js"></script>
+    <script src="/bs/bootstrap.bundle.min.js"></script>
+
+    <script src="/mathjs/math.js" type="text/javascript"></script>
+
+    <% if (req.params.calc_type == 'stats') { %>
+    <!-- DataTables -->
+    <link rel="stylesheet" href="/dt/jquery.dataTables.min.css">
+    <script src="/dt/jquery.dataTables.js"></script>
+
+    <!-- Plotly -->
+    <script src="/plotly/plotly.js"></script>
+    <% } %>
+
+    <!-- My libs -->
+    <% if (!req.params.help) { %>
+    <script src="/js/common/lib.js"></script>
+    <script src="/js/classes/Runes.js"></script>
+    <script src="/js/classes/Champs.js"></script>
+    <script src="/js/classes/Shop.js"></script>
+    <script src="/js/classes/Inventory.js"></script>
+    <% } %>
+
+</head>
+
+<body id="main-body">
+
+    <%- include('navbar') %>
+
+    <% if (!req.params.help) { %>
+    <%- include('offcanvas') %>
+    <% } %>
